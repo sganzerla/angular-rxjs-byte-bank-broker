@@ -19,8 +19,8 @@ export class AcoesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.acoesService.getAcoes().subscribe((retornoApi) => {
-      this.acoes = retornoApi.payload;
+    this.acoesService.getAcoes().subscribe((acoes) => {
+      this.acoes = acoes;
     });
   }
 }
