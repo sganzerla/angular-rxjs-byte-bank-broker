@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Acoes } from './modelo/acoes';
 import { AcoesService } from './acoes.service';
 
 @Component({
@@ -8,19 +7,8 @@ import { AcoesService } from './acoes.service';
   templateUrl: './acoes.component.html',
   styleUrls: ['./acoes.component.css'],
 })
-export class AcoesComponent implements OnInit, OnDestroy {
+export class AcoesComponent {
   acoesInput = new FormControl();
-  acoes: Acoes;
-
+  acoes$ = this.acoesService.getAcoes();
   constructor(private acoesService: AcoesService) {}
-
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  ngOnInit(): void {
-    this.acoesService.getAcoes().subscribe((acoes) => {
-      this.acoes = acoes;
-    });
-  }
 }
