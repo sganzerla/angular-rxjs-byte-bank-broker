@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { merge } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { AcoesService } from './acoes.service';
 
 @Component({
@@ -9,6 +11,12 @@ import { AcoesService } from './acoes.service';
 })
 export class AcoesComponent {
   acoesInput = new FormControl();
-  acoes$ = this.acoesService.getAcoes();
+  todasAcoes$ = this.acoesService.getAcoes();
+  filtroPeloInput$ = this.acoesInput.valueChanges.pipe(
+    switchMap((valorDigitado) => this.acoesService.getAcoes(valorDigitado))
+  );
+
+  acoes$ = merge(this.todasAcoes$, this.filtroPeloInput$);
+
   constructor(private acoesService: AcoesService) {}
 }
